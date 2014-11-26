@@ -5,6 +5,7 @@ bignumber =  require 'bignumber.js'
 BufferStream = require './BufferStream'
 Tagged = require './tagged'
 Simple = require './simple'
+Float = require './float'
 
 constants = require './constants'
 
@@ -13,6 +14,7 @@ MT = constants.MT
 NUM_BYTES = constants.NUM_BYTES
 TAG = constants.TAG
 SHIFT32 = Math.pow 2, 32
+FLOAT = (MT.SIMPLE_FLOAT << 5) | NUM_BYTES.FOUR
 DOUBLE = (MT.SIMPLE_FLOAT << 5) | NUM_BYTES.EIGHT
 TRUE = (MT.SIMPLE_FLOAT << 5) | constants.SIMPLE.TRUE
 FALSE = (MT.SIMPLE_FLOAT << 5) | constants.SIMPLE.FALSE
@@ -83,9 +85,12 @@ module.exports = class Encoder extends stream.Readable
 
   # @nodoc
   _packFloat: (obj) ->
-    # TODO: see if we can write smaller ones.
-    @bs.writeUInt8 DOUBLE
-    @bs.writeDoubleBE obj
+    if obj instanceof Float
+      @bs.writeUInt8 FLOAT
+      @bs.writeFloatBE obj.getValue()
+    else
+      @bs.writeUInt8 DOUBLE
+      @bs.writeDoubleBE obj
 
   # @nodoc
   _packInt: (obj,mt) ->
@@ -221,6 +226,9 @@ module.exports = class Encoder extends stream.Readable
     f = obj.encodeCBOR
     if typeof f == 'function'
       return f.call(obj, this)
+
+    if obj instanceof Float
+      return @_packFloat obj
 
     @_packMap obj
 

@@ -4,6 +4,7 @@
 var cbor = require('../lib/cbor');
 var Encoder = cbor.Encoder;
 var Simple = cbor.Simple;
+var Float = cbor.Float;
 var Tagged = cbor.Tagged;
 var hex = require('../lib/utils').hex;
 var url = require('url');
@@ -71,6 +72,8 @@ exports.from_spec = function(test) {
 
     // draft-03 says -18446744073709551617
     [new bignumber("-18446744073709551617"), '0xc349010000000000000000'],
+
+    [new Float(1.1), '0xfa3f8ccccd'],
 
     [-1, '0x20'],
     [-10, '0x29'],

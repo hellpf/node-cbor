@@ -3,6 +3,7 @@ exports.Diagnose = require './diagnose'
 exports.Decoder = require './decoder'
 exports.Encoder = require './encoder'
 exports.Simple = require './simple'
+exports.Float = require './float'
 exports.Tagged = require './tagged'
 exports.Evented = require './evented'
 
