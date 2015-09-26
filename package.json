@@ -32,7 +32,11 @@
   },
   "contributors": [
     "Patrick Gansterer <paroga@paroga.com> (http://paroga.com/)",
-    "Artyom Yagilev <github@scorpi.org> (http://scorpi.org/)"
+    "Artyom Yagilev <github@scorpi.org> (http://scorpi.org/)", {
+      "name": "Jan Loose",
+      "email": "jan@loose.cz",
+      "url": "http://www.loose.cz/"
+    }
   ],
   "devDependencies": {
     "garbage": "0.0.0",
